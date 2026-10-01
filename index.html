@@ -1,0 +1,1183 @@
+
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espetinho do Zé - O Melhor Churrasco na Brasa</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#DC2626',
+                            orange: '#EA580C',
+                            amber: '#F59E0B',
+                            dark: '#111827',
+                            card: '#1F2937',
+                            accent: '#FFD700'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        title: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Custom scrollbar and glow effects */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ea580c;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dc2626;
+        }
+        
+        .fire-glow {
+            text-shadow: 0 0 15px rgba(234, 88, 12, 0.6), 0 0 30px rgba(220, 38, 38, 0.4);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(234, 88, 12, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .toast-slide {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-red-600 via-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-fire text-2xl text-white"></i>
+                </div>
+                <div>
+                    <span class="font-title text-xl sm:text-2xl font-black uppercase tracking-wider text-white flex items-center gap-1">
+                        ESPETINHO <span class="text-orange-500 fire-glow">DO ZÉ</span>
+                    </span>
+                    <span class="block text-xs text-amber-400 font-medium tracking-widest uppercase">Assado na Brasa</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-gray-300">
+                <a href="#cardapio" class="hover:text-orange-400 transition-colors">Cardápio</a>
+                <a href="#combos" class="hover:text-orange-400 transition-colors">Combos</a>
+                <a href="#sobre" class="hover:text-orange-400 transition-colors">Sobre Nós</a>
+                <a href="#depoimentos" class="hover:text-orange-400 transition-colors">Depoimentos</a>
+                <a href="#contato" class="hover:text-orange-400 transition-colors">Contato</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-3">
+                <!-- Config Button for Business Owner -->
+                <button onclick="openSettingsModal()" title="Configurações do Estabelecimento" class="p-2.5 text-gray-400 hover:text-amber-400 hover:bg-gray-800 rounded-xl transition-all">
+                    <i class="fa-solid fa-gear text-lg"></i>
+                </button>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-orange-600/30 transition-all hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-basket-shopping text-lg"></i>
+                    <span class="hidden sm:inline">Meu Pedido</span>
+                    <span id="cart-badge-count" class="bg-amber-400 text-gray-950 font-black text-xs px-2 py-0.5 rounded-full min-w-[20px] text-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-gray-900 via-gray-950 to-gray-950">
+        <!-- Background Decorative Orbs -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orange-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 right-10 w-80 h-80 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Left Content -->
+                <div class="space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-sm font-semibold">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span>Aberto Agora • Entregas a Todo Vapor</span>
+                    </div>
+
+                    <h1 class="font-title text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-none">
+                        O Verdadeiro <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-red-600 fire-glow">Sabor da Brasa</span>
+                    </h1>
+
+                    <p class="text-gray-300 text-lg max-w-xl mx-auto lg:mx-0 font-normal">
+                        Espetinhos suculentos, selecionados a dedo e assados no ponto perfeito. Acompanhados do nosso farofa caseira e vinagrete especial.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#cardapio" class="w-full sm:w-auto text-center px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold rounded-2xl shadow-xl shadow-orange-600/30 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-utensils"></i>
+                            Ver Cardápio Completo
+                        </a>
+                        <button onclick="quickWhatsAppContact()" class="w-full sm:w-auto text-center px-6 py-4 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-2xl border border-gray-700 transition-all flex items-center justify-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
+                            Falar no WhatsApp
+                        </button>
+                    </div>
+
+                    <!-- Quick Metrics -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gray-800/80 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <p class="font-title text-2xl font-black text-amber-400">100%</p>
+                            <p class="text-xs text-gray-400 font-medium">Carne Selecionada</p>
+                        </div>
+                        <div>
+                            <p class="font-title text-2xl font-black text-amber-400">30 min</p>
+                            <p class="text-xs text-gray-400 font-medium">Entrega Média</p>
+                        </div>
+                        <div>
+                            <p class="font-title text-2xl font-black text-amber-400">4.9 ★</p>
+                            <p class="text-xs text-gray-400 font-medium">Avaliação Clientes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual Showcase -->
+                <div class="relative flex justify-center">
+                    <div class="relative w-full max-w-md lg:max-w-lg aspect-square rounded-3xl overflow-hidden border-2 border-gray-800 shadow-2xl bg-gray-900 group">
+                        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80" alt="Espetinho do Zé na Brasa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x600/1f2937/f59e0b?text=Espetinho+na+Brasa'">
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-gray-950/80 backdrop-blur-md border border-gray-800 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-orange-600/20 text-orange-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-drumstick-bite text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Mais Pedido: Picanha Temperada</h4>
+                                <p class="text-xs text-amber-400">Assada na hora com sal grosso & alho</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Grid -->
+    <section class="py-12 bg-gray-900 border-y border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-950/50 border border-gray-800">
+                    <div class="w-12 h-12 rounded-xl bg-red-600/20 text-red-500 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-fire-flame-curved"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Brasa de Carvão</h4>
+                        <p class="text-xs text-gray-400">Defumação natural e inconfundível</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-950/50 border border-gray-800">
+                    <div class="w-12 h-12 rounded-xl bg-orange-600/20 text-orange-500 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-cow"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Carnes de Primeira</h4>
+                        <p class="text-xs text-gray-400">Cortes frescos e selecionados</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-950/50 border border-gray-800">
+                    <div class="w-12 h-12 rounded-xl bg-amber-600/20 text-amber-500 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-pepper-hot"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Molhos do Zé</h4>
+                        <p class="text-xs text-gray-400">Receitas artesanais exclusivas</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-950/50 border border-gray-800">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-500 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Entrega Quentinha</h4>
+                        <p class="text-xs text-gray-400">Embalagem térmica selada</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Cardápio Section -->
+    <section id="cardapio" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-orange-500 font-bold text-sm tracking-widest uppercase">Nosso Cardápio</span>
+            <h2 class="font-title text-3xl sm:text-4xl font-black text-white uppercase mt-1">Escolha os Seus Favoritos</h2>
+            <p class="text-gray-400 text-sm mt-2">Clique no item para personalizar o ponto da carne e adicionar ao seu pedido.</p>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between mb-8">
+            
+            <!-- Category Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar" id="category-tabs">
+                <button onclick="filterCategory('todos')" class="cat-btn active bg-orange-600 text-white font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl whitespace-nowrap transition-all shadow-md">
+                    Todos
+                </button>
+                <button onclick="filterCategory('tradicionais')" class="cat-btn bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl whitespace-nowrap transition-all">
+                    Tradicionais
+                </button>
+                <button onclick="filterCategory('especiais')" class="cat-btn bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl whitespace-nowrap transition-all">
+                    Especiais
+                </button>
+                <button onclick="filterCategory('combos')" class="cat-btn bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl whitespace-nowrap transition-all">
+                    Combos
+                </button>
+                <button onclick="filterCategory('acompanhamentos')" class="cat-btn bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl whitespace-nowrap transition-all">
+                    Acompanhamentos
+                </button>
+                <button onclick="filterCategory('bebidas')" class="cat-btn bg-gray-800 hover:bg-gray-700 text-gray-300 font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl whitespace-nowrap transition-all">
+                    Bebidas
+                </button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="relative w-full md:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Buscar espetinho, bebida..." class="w-full bg-gray-900 border border-gray-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors">
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamically populated via JS -->
+        </div>
+    </section>
+
+    <!-- Banner Combos Promocionais -->
+    <section id="combos" class="py-16 bg-gradient-to-r from-red-950 via-gray-900 to-amber-950 border-y border-orange-900/40 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 text-center lg:text-left max-w-xl">
+                    <span class="bg-amber-400/20 text-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase border border-amber-400/30">🔥 Promoção da Semana</span>
+                    <h3 class="font-title text-3xl sm:text-4xl font-black text-white uppercase">Combo Família do Zé</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        10 Espetinhos à sua escolha + Porção de Mandioca na Manteiga + Farofa Especial + Vinagrete da Casa + Refrigerante 2L por um preço imperdível!
+                    </p>
+                    <div class="flex items-baseline justify-center lg:justify-start gap-3">
+                        <span class="text-3xl font-black text-amber-400">R$ 98,00</span>
+                        <span class="text-sm text-gray-400 line-through">R$ 125,00</span>
+                    </div>
+                </div>
+
+                <div>
+                    <button onclick="addPromoComboToCart()" class="px-8 py-4 bg-amber-400 hover:bg-amber-300 text-gray-950 font-black rounded-2xl shadow-xl shadow-amber-400/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-3">
+                        <i class="fa-solid fa-cart-plus text-xl"></i>
+                        Garantir Este Combo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Depoimentos -->
+    <section id="sobre" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span class="text-orange-500 font-bold text-sm tracking-widest uppercase">Tradição & Qualidade</span>
+                <h2 class="font-title text-3xl sm:text-4xl font-black text-white uppercase">A História do Espetinho do Zé</h2>
+                <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                    Começamos com uma pequena churrasqueira e o sonho de servir o melhor espetinho do bairro. Hoje, mantemos o mesmo tempero caseiro, carne de altíssima qualidade e o carinho em cada espeto assado.
+                </p>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Aqui você encontra desde os sabores clássicos até combinações especiais criadas para surpreender seu paladar.
+                </p>
+
+                <div class="flex items-center gap-6 pt-2">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-star text-amber-400 text-xl"></i>
+                        <i class="fa-solid fa-star text-amber-400 text-xl"></i>
+                        <i class="fa-solid fa-star text-amber-400 text-xl"></i>
+                        <i class="fa-solid fa-star text-amber-400 text-xl"></i>
+                        <i class="fa-solid fa-star text-amber-400 text-xl"></i>
+                    </div>
+                    <span class="text-xs text-gray-400 font-medium">+ de 1.500 clientes satisfeitos</span>
+                </div>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div id="depoimentos" class="space-y-4">
+                <div class="p-5 rounded-2xl bg-gray-900 border border-gray-800">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-full bg-orange-600 text-white font-bold flex items-center justify-center">M</div>
+                        <div>
+                            <h5 class="font-bold text-sm text-white">Marcos Silva</h5>
+                            <div class="text-xs text-amber-400">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-300">"O melhor espetinho de picanha da região! A carne vem no ponto exato e a mandioca derrete na boca."</p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-gray-900 border border-gray-800">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-full bg-red-600 text-white font-bold flex items-center justify-center">C</div>
+                        <div>
+                            <h5 class="font-bold text-sm text-white">Camila Rocha</h5>
+                            <div class="text-xs text-amber-400">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-300">"Atendimentonota 10! Pedido pelo WhatsApp chegou quentinho e super rápido. Recomendo o medalhão com bacon!"</p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-gray-900 border border-gray-800">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center">R</div>
+                        <div>
+                            <h5 class="font-bold text-sm text-white">Rafael Rodrigues</h5>
+                            <div class="text-xs text-amber-400">★★★★★</div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-300">"Queijo coalho com melaço irresistível! Sempre peço para o happy hour da empresa."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato & Localização Section -->
+    <section id="contato" class="py-16 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <!-- Endereço -->
+                <div class="p-6 rounded-2xl bg-gray-950 border border-gray-800 text-center flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-orange-600/20 text-orange-400 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-1">Onde Estamos</h4>
+                    <p id="display-address" class="text-xs text-gray-300 max-w-xs mb-4">Av. Principal das Brasas, 1230 - Centro</p>
+                    <a href="https://maps.google.com" target="_blank" class="text-xs text-orange-400 hover:underline font-semibold">Ver no Google Maps &rarr;</a>
+                </div>
+
+                <!-- Horário -->
+                <div class="p-6 rounded-2xl bg-gray-950 border border-gray-800 text-center flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-amber-600/20 text-amber-400 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-1">Horário de Funcionamento</h4>
+                    <p id="display-hours" class="text-xs text-gray-300 max-w-xs">Terça a Domingo: 18h00 às 23h30<br>Segunda: Fechado para descanso</p>
+                </div>
+
+                <!-- Contato Direct -->
+                <div class="p-6 rounded-2xl bg-gray-950 border border-gray-800 text-center flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-1">Peça pelo WhatsApp</h4>
+                    <p id="display-phone" class="text-xs text-gray-300 mb-4">(11) 99999-8888</p>
+                    <button onclick="quickWhatsAppContact()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-all">
+                        Enviar Mensagem Direct
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 border-t border-gray-900 py-8 text-center text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© <span id="current-year"></span> Espetinho do Zé. Todos os direitos reservados.</p>
+            <p class="mt-1">Desenvolvido com carinho para o melhor churrasco da cidade.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Drawer (Slide-Over) -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div onclick="toggleCartDrawer()" class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-gray-900 text-white flex flex-col shadow-2xl border-l border-gray-800">
+                
+                <!-- Drawer Header -->
+                <div class="p-5 bg-gray-950 border-b border-gray-800 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-basket-shopping text-orange-500 text-xl"></i>
+                        <h3 class="font-title text-lg font-bold">Seu Pedido</h3>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-white text-xl p-2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Drawer Body (Items List) -->
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Drawer Footer (Checkout Details) -->
+                <div id="cart-footer" class="p-5 bg-gray-950 border-t border-gray-800 space-y-4">
+                    
+                    <!-- Delivery Option Toggle -->
+                    <div class="grid grid-cols-2 gap-2 bg-gray-900 p-1 rounded-xl border border-gray-800">
+                        <button id="btn-option-delivery" onclick="setDeliveryOption('delivery')" class="py-2 text-xs font-bold rounded-lg bg-orange-600 text-white transition-all">
+                            <i class="fa-solid fa-motorcycle mr-1"></i> Entrega
+                        </button>
+                        <button id="btn-option-pickup" onclick="setDeliveryOption('pickup')" class="py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition-all">
+                            <i class="fa-solid fa-store mr-1"></i> Retirada
+                        </button>
+                    </div>
+
+                    <!-- Address & Name Inputs -->
+                    <div class="space-y-2 text-xs">
+                        <input type="text" id="customer-name" placeholder="Seu Nome Completo" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500">
+                        
+                        <div id="address-input-group">
+                            <input type="text" id="customer-address" placeholder="Endereço de Entrega (Rua, Nº, Bairro)" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500">
+                        </div>
+
+                        <!-- Payment Method -->
+                        <select id="payment-method" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+                            <option value="Pix">Forma de Pagamento: Pix (Chave no WhatsApp)</option>
+                            <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito (Levar Maquininha)</option>
+                            <option value="Dinheiro">Dinheiro (Informar Troco nas Observações)</option>
+                        </select>
+
+                        <textarea id="order-notes" rows="2" placeholder="Observações (ex: Troco para R$50, pouca pimenta...)" class="w-full bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500"></textarea>
+                    </div>
+
+                    <!-- Summary Totals -->
+                    <div class="space-y-1 text-xs pt-2 border-t border-gray-800">
+                        <div class="flex justify-between text-gray-400">
+                            <span>Subtotal:</span>
+                            <span id="summary-subtotal">R$ 0,00</span>
+                        </div>
+                        <div id="summary-delivery-row" class="flex justify-between text-gray-400">
+                            <span>Taxa de Entrega:</span>
+                            <span id="summary-delivery-fee">R$ 5,00</span>
+                        </div>
+                        <div class="flex justify-between text-base font-bold text-white pt-1">
+                            <span>Total Geral:</span>
+                            <span id="summary-total" class="text-amber-400">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button onclick="sendOrderViaWhatsApp()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        Enviar Pedido no WhatsApp
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Customization Modal (Ponto da Carne) -->
+    <div id="customize-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div onclick="closeCustomizeModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="relative bg-gray-900 border border-gray-800 rounded-3xl max-w-md w-full p-6 space-y-6 shadow-2xl text-white">
+                
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 id="modal-product-title" class="font-title text-xl font-bold text-white">Nome do Item</h3>
+                        <p id="modal-product-price" class="text-orange-400 font-bold text-sm">R$ 0,00</p>
+                    </div>
+                    <button onclick="closeCustomizeModal()" class="text-gray-400 hover:text-white text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <p id="modal-product-desc" class="text-xs text-gray-400">Descrição do produto aqui.</p>
+
+                <!-- Skewer Point Selection -->
+                <div id="skewer-point-section" class="space-y-2">
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider">Ponto da Carne:</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="selectPoint('Ao Ponto')" class="point-opt border border-orange-500 bg-orange-500/20 text-orange-400 text-xs font-semibold py-2 rounded-xl">Ao Ponto</button>
+                        <button onclick="selectPoint('Bem Passado')" class="point-opt border border-gray-800 bg-gray-950 text-gray-400 text-xs font-semibold py-2 rounded-xl">Bem Passado</button>
+                        <button onclick="selectPoint('Mal Passado')" class="point-opt border border-gray-800 bg-gray-950 text-gray-400 text-xs font-semibold py-2 rounded-xl">Mal Passado</button>
+                    </div>
+                </div>
+
+                <!-- Extra Notes -->
+                <div class="space-y-1">
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider">Observações do Item:</label>
+                    <input type="text" id="item-custom-note" placeholder="Ex: Sem farofa, vinagrete à parte..." class="w-full bg-gray-950 border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-orange-500">
+                </div>
+
+                <!-- Quantity & Confirm Button -->
+                <div class="flex items-center gap-4 pt-2">
+                    <div class="flex items-center border border-gray-800 rounded-xl bg-gray-950 px-3 py-1.5 gap-3">
+                        <button onclick="adjustModalQty(-1)" class="text-orange-400 text-lg font-bold">-</button>
+                        <span id="modal-qty" class="font-bold text-sm">1</span>
+                        <button onclick="adjustModalQty(1)" class="text-orange-400 text-lg font-bold">+</button>
+                    </div>
+
+                    <button onclick="confirmAddToCart()" class="flex-1 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3 rounded-xl shadow-lg transition-all text-xs uppercase tracking-wider">
+                        Adicionar ao Pedido
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Settings Modal (Para a amiga mudar WhatsApp/Dados) -->
+    <div id="settings-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div onclick="closeSettingsModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="relative bg-gray-900 border border-gray-800 rounded-3xl max-w-lg w-full p-6 space-y-6 shadow-2xl text-white">
+                
+                <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-gear text-amber-400"></i>
+                        <h3 class="font-title text-lg font-bold">Configurações do Espetinho</h3>
+                    </div>
+                    <button onclick="closeSettingsModal()" class="text-gray-400 hover:text-white">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    <div>
+                        <label class="block font-bold text-gray-300 mb-1">Número do WhatsApp (Com DDD):</label>
+                        <input type="text" id="setting-phone" placeholder="5511999998888" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-400">
+                        <span class="text-[10px] text-gray-500">Exemplo: 5511987654321 (apenas números)</span>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-300 mb-1">Endereço Exibido:</label>
+                        <input type="text" id="setting-address" placeholder="Av. Principal das Brasas, 1230 - Centro" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-400">
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-300 mb-1">Horário de Funcionamento:</label>
+                        <input type="text" id="setting-hours" placeholder="Terça a Domingo: 18h00 às 23h30" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-400">
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-300 mb-1">Taxa Padrão de Entrega (R$):</label>
+                        <input type="number" step="0.5" id="setting-delivery-fee" placeholder="5.00" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-amber-400">
+                    </div>
+                </div>
+
+                <button onclick="saveSettings()" class="w-full bg-amber-400 hover:bg-amber-300 text-gray-950 font-bold py-3 rounded-xl transition-all text-xs uppercase tracking-wider">
+                    Salvar Alterações
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- Main JavaScript Logic -->
+    <script>
+        // Store configuration defaults
+        let storeConfig = {
+            whatsappPhone: '5511999998888',
+            address: 'Av. Principal das Brasas, 1230 - Centro',
+            hours: 'Terça a Domingo: 18h00 às 23h30',
+            deliveryFee: 5.00
+        };
+
+        // Database Products
+        const products = [
+            {
+                id: 'p1',
+                name: 'Espetinho de Alcatra',
+                category: 'tradicionais',
+                price: 12.00,
+                desc: 'Suculenta alcatra marinada em ervas e assada na brasa.',
+                image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80',
+                isSkewer: true,
+                popular: true
+            },
+            {
+                id: 'p2',
+                name: 'Frango com Bacon (Medalhão)',
+                category: 'tradicionais',
+                price: 11.00,
+                desc: 'Cubos de peito de frango macios envolvidos em fatias crocantes de bacon.',
+                image: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=600&q=80',
+                isSkewer: true,
+                popular: true
+            },
+            {
+                id: 'p3',
+                name: 'Linguiça Cuiabana Recheada',
+                category: 'tradicionais',
+                price: 10.00,
+                desc: 'Linguiça artesanal recheada com queijo temperado.',
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+                isSkewer: true,
+                popular: false
+            },
+            {
+                id: 'p4',
+                name: 'Coração de Frango Temperado',
+                category: 'tradicionais',
+                price: 11.00,
+                desc: 'Corações bem temperados e suculentos na brasa.',
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+                isSkewer: true,
+                popular: false
+            },
+            {
+                id: 'p5',
+                name: 'Espetinho de Picanha Nobre',
+                category: 'especiais',
+                price: 15.00,
+                desc: 'Corte nobre de picanha com capa de gordura macia no ponto perfeito.',
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
+                isSkewer: true,
+                popular: true
+            },
+            {
+                id: 'p6',
+                name: 'Queijo Coalho com Melaço',
+                category: 'especiais',
+                price: 9.00,
+                desc: 'Queijo coalho tostado por fora e derretido por dentro, servido com melaço.',
+                image: 'https://images.unsplash.com/photo-1628294895950-9805252327bc?auto=format&fit=crop&w=600&q=80',
+                isSkewer: false,
+                popular: true
+            },
+            {
+                id: 'p7',
+                name: 'Pão de Alho Especial Recheado',
+                category: 'especiais',
+                price: 8.50,
+                desc: 'Crosta crocante recheada com muito creme de alho e queijo.',
+                image: 'https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=600&q=80',
+                isSkewer: false,
+                popular: false
+            },
+            {
+                id: 'p8',
+                name: 'Kafta Temperada da Casa',
+                category: 'tradicionais',
+                price: 11.00,
+                desc: 'Carne moída nobre temperada com hortelã e especiarias árabes.',
+                image: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=600&q=80',
+                isSkewer: true,
+                popular: false
+            },
+            {
+                id: 'p9',
+                name: 'Combo Casal (5 Espetinhos + Mandioca)',
+                category: 'combos',
+                price: 54.00,
+                desc: '5 espetinhos tradicionais à escolha + porção de mandioca e vinagrete.',
+                image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80',
+                isSkewer: false,
+                popular: true
+            },
+            {
+                id: 'p10',
+                name: 'Porção de Mandioca na Manteiga',
+                category: 'acompanhamentos',
+                price: 14.00,
+                desc: 'Mandioca amarela cozida e finalizada na manteiga de garrafa.',
+                image: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=600&q=80',
+                isSkewer: false,
+                popular: false
+            },
+            {
+                id: 'p11',
+                name: 'Farofa Especial e Vinagrete',
+                category: 'acompanhamentos',
+                price: 6.00,
+                desc: 'Porção extra de vinagrete fresco e farofa caseira crocante.',
+                image: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=600&q=80',
+                isSkewer: false,
+                popular: false
+            },
+            {
+                id: 'p12',
+                name: 'Cerveja Gelada 350ml',
+                category: 'bebidas',
+                price: 7.00,
+                desc: 'Lata trincando de gelada.',
+                image: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=600&q=80',
+                isSkewer: false,
+                popular: false
+            },
+            {
+                id: 'p13',
+                name: 'Refrigerante Lata 350ml',
+                category: 'bebidas',
+                price: 6.00,
+                desc: 'Coca-Cola, Guaraná ou Soda.',
+                image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80',
+                isSkewer: false,
+                popular: false
+            }
+        ];
+
+        // State
+        let cart = [];
+        let currentFilter = 'todos';
+        let currentCustomizingProduct = null;
+        let selectedMeatPoint = 'Ao Ponto';
+        let modalQuantity = 1;
+        let deliveryMode = 'delivery'; // 'delivery' or 'pickup'
+
+        // On Load
+        window.onload = function() {
+            document.getElementById('current-year').innerText = new Date().getFullYear();
+            loadSettings();
+            renderProducts();
+            updateCartUI();
+        }
+
+        // Render Products Grid
+        function renderProducts(filterQuery = '') {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchesCategory = currentFilter === 'todos' || p.category === currentFilter;
+                const matchesSearch = p.name.toLowerCase().includes(filterQuery.toLowerCase()) || 
+                                      p.desc.toLowerCase().includes(filterQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-500">
+                        <i class="fa-solid fa-stroopwafel text-4xl mb-2"></i>
+                        <p>Nenhum item encontrado nesta categoria.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between card-hover";
+                
+                card.innerHTML = `
+                    <div>
+                        <!-- Image Container -->
+                        <div class="relative h-44 overflow-hidden bg-gray-950">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1f2937/f59e0b?text=Espetinho'">
+                            ${p.popular ? `<span class="absolute top-3 left-3 bg-amber-400 text-gray-950 font-black text-[10px] uppercase px-2.5 py-1 rounded-full shadow">Mais Pedido</span>` : ''}
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-4 space-y-2">
+                            <h3 class="font-bold text-white text-base leading-tight">${p.name}</h3>
+                            <p class="text-xs text-gray-400 line-clamp-2">${p.desc}</p>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="p-4 pt-0 flex items-center justify-between border-t border-gray-800/50 mt-3">
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase font-semibold">Valor</span>
+                            <p class="text-amber-400 font-bold text-base">R$ ${p.price.toFixed(2).replace('.', ',')}</p>
+                        </div>
+                        <button onclick="openCustomizeModal('${p.id}')" class="bg-orange-600 hover:bg-orange-500 text-white p-2.5 rounded-xl shadow transition-all active:scale-95 flex items-center gap-1.5 text-xs font-bold">
+                            <i class="fa-solid fa-plus"></i>
+                            Adicionar
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Category Filtering
+        function filterCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-orange-600', 'text-white', 'shadow-md');
+                btn.classList.add('bg-gray-800', 'text-gray-300');
+            });
+
+            event.target.classList.remove('bg-gray-800', 'text-gray-300');
+            event.target.classList.add('bg-orange-600', 'text-white', 'shadow-md');
+
+            renderProducts(document.getElementById('search-input').value);
+        }
+
+        // Search Input Handling
+        function handleSearch() {
+            const query = document.getElementById('search-input').value;
+            renderProducts(query);
+        }
+
+        // Customize Item Modal
+        function openCustomizeModal(productId) {
+            currentCustomizingProduct = products.find(p => p.id === productId);
+            if (!currentCustomizingProduct) return;
+
+            document.getElementById('modal-product-title').innerText = currentCustomizingProduct.name;
+            document.getElementById('modal-product-price').innerText = `R$ ${currentCustomizingProduct.price.toFixed(2).replace('.', ',')}`;
+            document.getElementById('modal-product-desc').innerText = currentCustomizingProduct.desc;
+            document.getElementById('item-custom-note').value = '';
+            
+            modalQuantity = 1;
+            document.getElementById('modal-qty').innerText = modalQuantity;
+
+            // Toggle meat point selector for skewers
+            const pointSection = document.getElementById('skewer-point-section');
+            if (currentCustomizingProduct.isSkewer) {
+                pointSection.classList.remove('hidden');
+                selectPoint('Ao Ponto');
+            } else {
+                pointSection.classList.add('hidden');
+                selectedMeatPoint = null;
+            }
+
+            document.getElementById('customize-modal').classList.remove('hidden');
+        }
+
+        function closeCustomizeModal() {
+            document.getElementById('customize-modal').classList.add('hidden');
+        }
+
+        function selectPoint(point) {
+            selectedMeatPoint = point;
+            document.querySelectorAll('.point-opt').forEach(btn => {
+                if (btn.innerText === point) {
+                    btn.className = "point-opt border border-orange-500 bg-orange-500/20 text-orange-400 text-xs font-semibold py-2 rounded-xl transition-all";
+                } else {
+                    btn.className = "point-opt border border-gray-800 bg-gray-950 text-gray-400 text-xs font-semibold py-2 rounded-xl transition-all";
+                }
+            });
+        }
+
+        function adjustModalQty(delta) {
+            modalQuantity = Math.max(1, modalQuantity + delta);
+            document.getElementById('modal-qty').innerText = modalQuantity;
+        }
+
+        function confirmAddToCart() {
+            if (!currentCustomizingProduct) return;
+
+            const note = document.getElementById('item-custom-note').value.trim();
+
+            const cartItem = {
+                cartId: Date.now() + Math.random(),
+                product: currentCustomizingProduct,
+                point: selectedMeatPoint,
+                note: note,
+                quantity: modalQuantity
+            };
+
+            cart.push(cartItem);
+            updateCartUI();
+            closeCustomizeModal();
+            showToast(`Adicionado: ${currentCustomizingProduct.name}`);
+        }
+
+        function addPromoComboToCart() {
+            const promoProduct = products.find(p => p.id === 'p9');
+            if (promoProduct) {
+                cart.push({
+                    cartId: Date.now(),
+                    product: promoProduct,
+                    point: null,
+                    note: 'Promoção Combo Família do Zé',
+                    quantity: 1
+                });
+                updateCartUI();
+                showToast('Combo Família adicionado ao pedido!');
+                toggleCartDrawer();
+            }
+        }
+
+        // Cart Drawer Operations
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge-count');
+            
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            badge.innerText = totalCount;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center text-gray-500 py-12">
+                        <i class="fa-solid fa-basket-shopping text-5xl mb-3 text-gray-700"></i>
+                        <p class="font-semibold text-sm">Seu carrinho está vazio.</p>
+                        <p class="text-xs text-gray-600 mt-1">Que tal adicionar um espetinho bem assado?</p>
+                    </div>
+                `;
+                updateTotals(0);
+                return;
+            }
+
+            container.innerHTML = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.product.price * item.quantity;
+                subtotal += itemTotal;
+
+                const itemElement = document.createElement('div');
+                itemElement.className = "bg-gray-950 p-3.5 rounded-2xl border border-gray-800 space-y-2";
+                
+                itemElement.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">${item.product.name}</h4>
+                            ${item.point ? `<span class="text-[10px] bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded border border-orange-500/30">${item.point}</span>` : ''}
+                            ${item.note ? `<p class="text-[11px] text-gray-400 italic mt-0.5">Obs: ${item.note}</p>` : ''}
+                        </div>
+                        <button onclick="removeFromCart(${item.cartId})" class="text-gray-500 hover:text-red-400 p-1">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex justify-between items-center pt-2 border-t border-gray-900">
+                        <span class="text-xs text-amber-400 font-bold">R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
+                        <div class="flex items-center gap-2 bg-gray-900 px-2 py-1 rounded-lg border border-gray-800">
+                            <button onclick="changeCartQty(${item.cartId}, -1)" class="text-xs text-orange-400 font-bold px-1.5">-</button>
+                            <span class="text-xs font-bold">${item.quantity}</span>
+                            <button onclick="changeCartQty(${item.cartId}, 1)" class="text-xs text-orange-400 font-bold px-1.5">+</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(itemElement);
+            });
+
+            updateTotals(subtotal);
+        }
+
+        function changeCartQty(cartId, delta) {
+            const idx = cart.findIndex(i => i.cartId === cartId);
+            if (idx !== -1) {
+                cart[idx].quantity += delta;
+                if (cart[idx].quantity <= 0) {
+                    cart.splice(idx, 1);
+                }
+                updateCartUI();
+            }
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(i => i.cartId !== cartId);
+            updateCartUI();
+            showToast('Item removido do pedido');
+        }
+
+        function setDeliveryOption(option) {
+            deliveryMode = option;
+            const btnDelivery = document.getElementById('btn-option-delivery');
+            const btnPickup = document.getElementById('btn-option-pickup');
+            const addressGroup = document.getElementById('address-input-group');
+            const deliveryRow = document.getElementById('summary-delivery-row');
+
+            if (option === 'delivery') {
+                btnDelivery.className = "py-2 text-xs font-bold rounded-lg bg-orange-600 text-white transition-all";
+                btnPickup.className = "py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition-all";
+                addressGroup.classList.remove('hidden');
+                deliveryRow.classList.remove('hidden');
+            } else {
+                btnPickup.className = "py-2 text-xs font-bold rounded-lg bg-orange-600 text-white transition-all";
+                btnDelivery.className = "py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition-all";
+                addressGroup.classList.add('hidden');
+                deliveryRow.classList.add('hidden');
+            }
+            updateCartUI();
+        }
+
+        function updateTotals(subtotal) {
+            const fee = deliveryMode === 'delivery' ? storeConfig.deliveryFee : 0;
+            const total = subtotal + fee;
+
+            document.getElementById('summary-subtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('summary-delivery-fee').innerText = `R$ ${storeConfig.deliveryFee.toFixed(2).replace('.', ',')}`;
+            document.getElementById('summary-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Format and Send WhatsApp Order
+        function sendOrderViaWhatsApp() {
+            if (cart.length === 0) {
+                showToast('Seu carrinho está vazio!');
+                return;
+            }
+
+            const name = document.getElementById('customer-name').value.trim();
+            const address = document.getElementById('customer-address').value.trim();
+            const payment = document.getElementById('payment-method').value;
+            const notes = document.getElementById('order-notes').value.trim();
+
+            if (!name) {
+                showToast('Por favor, informe seu nome!');
+                return;
+            }
+
+            if (deliveryMode === 'delivery' && !address) {
+                showToast('Por favor, informe seu endereço de entrega!');
+                return;
+            }
+
+            let message = `🔥 *NOVO PEDIDO - ESPETINHO DO ZÉ* 🔥\n\n`;
+            message += `👤 *Cliente:* ${name}\n`;
+            message += `📍 *Tipo:* ${deliveryMode === 'delivery' ? 'Entrega em Domicílio' : 'Retirada no Balcão'}\n`;
+            
+            if (deliveryMode === 'delivery') {
+                message += `🏠 *Endereço:* ${address}\n`;
+            }
+
+            message += `💳 *Forma de Pagamento:* ${payment}\n`;
+            message += `-----------------------------------\n`;
+            message += `📋 *ITENS DO PEDIDO:*\n\n`;
+
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.product.price * item.quantity;
+                subtotal += itemTotal;
+
+                message += `${index + 1}. *${item.quantity}x ${item.product.name}*\n`;
+                if (item.point) message += `   • Ponto: ${item.point}\n`;
+                if (item.note) message += `   • Obs: ${item.note}\n`;
+                message += `   • Subtotal: R$ ${itemTotal.toFixed(2).replace('.', ',')}\n\n`;
+            });
+
+            const fee = deliveryMode === 'delivery' ? storeConfig.deliveryFee : 0;
+            const total = subtotal + fee;
+
+            message += `-----------------------------------\n`;
+            message += `💰 *Subtotal:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+            if (deliveryMode === 'delivery') {
+                message += `🛵 *Taxa de Entrega:* R$ ${fee.toFixed(2).replace('.', ',')}\n`;
+            }
+            message += `💥 *TOTAL GERAL:* R$ ${total.toFixed(2).replace('.', ',')}\n`;
+
+            if (notes) {
+                message += `\n📝 *Observações Gerais:* ${notes}\n`;
+            }
+
+            message += `\nObrigado! Aguardo a confirmação do pedido.`;
+
+            const encoded = encodeURIComponent(message);
+            const waUrl = `https://wa.me/${storeConfig.whatsappPhone}?text=${encoded}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function quickWhatsAppContact() {
+            const msg = encodeURIComponent('Olá! Gostaria de tirar uma dúvida sobre o cardápio do Espetinho do Zé.');
+            window.open(`https://wa.me/${storeConfig.whatsappPhone}?text=${msg}`, '_blank');
+        }
+
+        // Settings Management
+        function openSettingsModal() {
+            document.getElementById('setting-phone').value = storeConfig.whatsappPhone;
+            document.getElementById('setting-address').value = storeConfig.address;
+            document.getElementById('setting-hours').value = storeConfig.hours;
+            document.getElementById('setting-delivery-fee').value = storeConfig.deliveryFee;
+            document.getElementById('settings-modal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settings-modal').classList.add('hidden');
+        }
+
+        function saveSettings() {
+            const phone = document.getElementById('setting-phone').value.trim();
+            const addr = document.getElementById('setting-address').value.trim();
+            const hours = document.getElementById('setting-hours').value.trim();
+            const fee = parseFloat(document.getElementById('setting-delivery-fee').value) || 0;
+
+            if (phone) storeConfig.whatsappPhone = phone.replace(/\D/g, '');
+            if (addr) storeConfig.address = addr;
+            if (hours) storeConfig.hours = hours;
+            storeConfig.deliveryFee = fee;
+
+            localStorage.setItem('espetinho_ze_config', JSON.stringify(storeConfig));
+            applyConfigToUI();
+            closeSettingsModal();
+            showToast('Configurações salvas com sucesso!');
+        }
+
+        function loadSettings() {
+            const saved = localStorage.getItem('espetinho_ze_config');
+            if (saved) {
+                try {
+                    storeConfig = { ...storeConfig, ...JSON.parse(saved) };
+                } catch(e) {}
+            }
+            applyConfigToUI();
+        }
+
+        function applyConfigToUI() {
+            document.getElementById('display-address').innerText = storeConfig.address;
+            document.getElementById('display-hours').innerText = storeConfig.hours;
+            document.getElementById('display-phone').innerText = '+' + storeConfig.whatsappPhone;
+        }
+
+        // Toast Popup Message
+        function showToast(text) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "bg-gray-900 border border-orange-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 toast-slide";
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-orange-400 text-base"></i> <span>${text}</span>`;
+            
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
